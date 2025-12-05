@@ -49,9 +49,6 @@ COPY --from=deps /app/packages/backend/node_modules ./packages/backend/node_modu
 COPY --from=builder /app/packages/backend/dist ./packages/backend/dist
 COPY --from=builder /app/packages/frontend/dist ./packages/frontend/dist
 
-# Copy environment files
-COPY .env.example .env
-
 # Create uploads directory for file processing
 RUN mkdir -p /app/uploads && chown -R nextjs:nodejs /app/uploads
 
