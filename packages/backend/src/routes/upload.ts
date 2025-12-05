@@ -58,9 +58,9 @@ interface ProcessedFile {
   id: string;
   filename: string;
   originalName: string;
-  type: 'er' | 'bc';
+  type: 'ER' | 'BC';
   content: string;
-  uploadedAt: Date;
+  uploadDate: string;
 }
 
 const processedFiles: Map<string, ProcessedFile[]> = new Map();
@@ -84,9 +84,9 @@ router.post('/er', authenticate, upload.array('files', 10), async (req, res) => 
           id: file.filename,
           filename: file.filename,
           originalName: file.originalname,
-          type: 'er',
+          type: 'ER',
           content,
-          uploadedAt: new Date()
+          uploadDate: new Date().toISOString()
         };
 
         processedFilesList.push(processedFile);
@@ -98,7 +98,7 @@ router.post('/er', authenticate, upload.array('files', 10), async (req, res) => 
 
     // Guardar en memoria temporal
     const existingFiles = processedFiles.get(sessionId) || [];
-    const updatedFiles = existingFiles.filter(f => f.type !== 'er').concat(processedFilesList);
+    const updatedFiles = existingFiles.filter(f => f.type !== 'ER').concat(processedFilesList);
     processedFiles.set(sessionId, updatedFiles);
     
     console.log('📁 Archivos ER guardados para sessionId:', sessionId, 'Total archivos:', updatedFiles.length);
@@ -138,9 +138,9 @@ router.post('/bc', authenticate, upload.array('files', 10), async (req, res) => 
           id: file.filename,
           filename: file.filename,
           originalName: file.originalname,
-          type: 'bc',
+          type: 'BC',
           content,
-          uploadedAt: new Date()
+          uploadDate: new Date().toISOString()
         };
 
         processedFilesList.push(processedFile);
@@ -151,7 +151,7 @@ router.post('/bc', authenticate, upload.array('files', 10), async (req, res) => 
 
     // Guardar en memoria temporal
     const existingFiles = processedFiles.get(sessionId) || [];
-    const updatedFiles = existingFiles.filter(f => f.type !== 'bc').concat(processedFilesList);
+    const updatedFiles = existingFiles.filter(f => f.type !== 'BC').concat(processedFilesList);
     processedFiles.set(sessionId, updatedFiles);
 
     res.json({
@@ -180,7 +180,7 @@ router.get('/files/:sessionId', authenticate, (req, res) => {
       id: f.id,
       name: f.originalName,
       type: f.type,
-      uploadedAt: f.uploadedAt
+      uploadDate: f.uploadDate
     }))
   });
 });

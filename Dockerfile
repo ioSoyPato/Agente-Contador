@@ -43,7 +43,6 @@ RUN adduser --system --uid 1001 nextjs
 COPY package*.json ./
 COPY packages/backend/package*.json ./packages/backend/
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/packages/backend/node_modules ./packages/backend/node_modules
 
 # Copy built application
 COPY --from=builder /app/packages/backend/dist ./packages/backend/dist

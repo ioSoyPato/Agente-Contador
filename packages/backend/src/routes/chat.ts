@@ -105,8 +105,8 @@ router.delete('/history/:sessionId', authenticate, (req, res) => {
 function prepareContext(processedFiles: any[]): string {
   let context = '';
   
-  const erFiles = processedFiles.filter(f => f.type === 'er');
-  const bcFiles = processedFiles.filter(f => f.type === 'bc');
+  const erFiles = processedFiles.filter(f => f.type === 'ER');
+  const bcFiles = processedFiles.filter(f => f.type === 'BC');
   
   if (erFiles.length > 0) {
     context += '\n=== ESTADOS DE RESULTADOS ===\n';
