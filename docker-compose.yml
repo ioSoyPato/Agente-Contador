@@ -6,6 +6,7 @@ services:
     container_name: financial-analyzer-app
     ports:
       - "3001:3001"
+      - "80:3001"
     environment:
       - NODE_ENV=production
       - PORT=3001
